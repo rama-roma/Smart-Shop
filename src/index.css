@@ -1,1 +1,36 @@
 @import "tailwindcss";
+*{
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+.light {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+}
+
+.dark {
+  --bg-color: #1e1e1e;
+  --text-color: #f5f5f5;
+}
+
+body, .light, .dark {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.swiper-button-next,
+.swiper-button-prev {
+  @apply text-black dark:text-white;
+}
+
+.swiper-pagination-bullet {
+  @apply bg-black dark:bg-white opacity-40;
+}
+
+.swiper-pagination-bullet-active {
+  @apply opacity-100;
+}
