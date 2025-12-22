@@ -1,7 +1,8 @@
 import { useNavigate, useParams } from "react-router";
 import { useGetProductByIdQuery } from "../store/api/productApi/product";
 import { useTranslation } from "react-i18next";
-import { MessageCircleMore, Star } from "lucide-react";
+import { Copy, MessageCircleMore, ShoppingCart } from "lucide-react";
+import { useState } from "react";
 
 const InfoPage = () => {
   const { id } = useParams();
@@ -9,6 +10,15 @@ const InfoPage = () => {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    });
+  };
 
   return (
     <>
@@ -19,7 +29,7 @@ const InfoPage = () => {
               className="text-start w-40 p-2 border rounded-[5px] bg-[#ffd36a] border-[#ffd36a]  text-[black]"
               onClick={() => navigate(-1)}
             >
-              ⮜ Back
+              ⮜ {t("xa.xaxa7")}
             </button>
           </div>
           <div className="flex items-center gap-[10px]">
@@ -119,10 +129,21 @@ const InfoPage = () => {
               })}
             </div>
           </article>
-          <article className="p-4 bg-white rounded-lg shadow-md border border-gray-200">
+          <article className="p-4 h-115 rounded-lg shadow-md border border-gray-200">
             <div className="flex items-center justify-between w-140 p-2 border-b border-gray-100">
               <span>{t("xa.xaxa")}</span>
-              <h1>{data?.code}</h1>
+              <div className="flex items-center gap-[10px]">
+                <h1>{data?.code}</h1>
+                <button
+                  onClick={() => handleCopy(data?.code || "")}
+                  className="p-1 rounded hover:bg-gray-200"
+                >
+                  <Copy
+                    size={20}
+                    className={copied ? "text-green-500" : "text-black"}
+                  />
+                </button>
+              </div>
             </div>
 
             <div className="flex items-center justify-between w-140 p-2 border-b border-gray-100">
@@ -142,9 +163,7 @@ const InfoPage = () => {
 
             <div className="flex items-center justify-between w-140 p-2 border-b border-gray-100">
               <span>{t("xa.xaxa4")}</span>
-              <h1>
-                {data?.hasDiscount ? "New" : "-20%"}
-              </h1>
+              <h1>{data?.hasDiscount ? "New" : "-20%"}</h1>
             </div>
 
             <div className="flex items-center justify-between w-140 p-2 border-b border-gray-100">
@@ -155,6 +174,13 @@ const InfoPage = () => {
             <div className="flex items-center justify-between w-140 p-2">
               <span>{t("xa.xaxa6")}</span>
               <h1 className="font-normal">{data?.description}</h1>
+            </div>
+            
+            <div className="p-2">
+              <button className="mt-auto flex w-40 items-center justify-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 rounded-lg">
+                <ShoppingCart size={18} />
+                {t("main.lol6")}
+              </button>
             </div>
           </article>
         </section>

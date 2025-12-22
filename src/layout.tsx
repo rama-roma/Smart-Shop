@@ -2,6 +2,7 @@ import {
   Facebook,
   Heart,
   Instagram,
+  LogIn,
   Search,
   Send,
   ShoppingBasket,
@@ -15,7 +16,7 @@ import ButtonTheme from "./components/buttonTheme";
 import LanguageSelector from "./components/languageSelector";
 import { Link, Outlet } from "react-router";
 import qr from "./images/qr.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "antd";
 import {
   useGetCategoriesQuery,
@@ -34,6 +35,13 @@ const Layout = () => {
   const { data: activeCategory } = useGetCategoryByIdQuery(activeCategoryId!, {
     skip: activeCategoryId === null,
   });
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(token ? true : false);
+  }, []);
 
   return (
     <>
@@ -86,10 +94,21 @@ const Layout = () => {
           </div>
 
           <div className="flex flex-col items-center gap-[5px]">
-            <Link to="/profilePage">
-              <User />
-            </Link>
-            <h1 className="text-[13px]">{t("navbar.title4")}</h1>
+            {isLoggedIn ? (
+              <>
+                <Link to="/profilePage">
+                  <User />
+                </Link>
+                <h1 className="text-[13px]">{t("navbar.title4")}</h1>
+              </>
+            ) : (
+              <>
+                <Link to="/loginPage">
+                  <LogIn />
+                </Link>
+                <h1 className="text-[13px]">{t("navbar.title16")}</h1>
+              </>
+            )}
           </div>
 
           <LanguageSelector />
