@@ -118,10 +118,10 @@ const HomePage = () => {
                   {e.hasDiscount ? (
                     <div className="flex gap-2 items-center">
                       <span className="text-yellow-500 font-bold">
-                        ${e.discountPrice}
+                        ${e.price}
                       </span>
                       <span className="line-through text-gray-400">
-                        ${e.price}
+                        ${e.discountPrice}
                       </span>
                     </div>
                   ) : (
