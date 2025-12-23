@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 // @ts-ignore
-import user from '../assets/user.jpg'
+import user from "../assets/user.jpg";
 import { Heart, ShoppingBag, Smartphone, ThumbsUp } from "lucide-react";
 import { useTheme } from "../store/theme/ThemeContext";
 import { useUserProfileQuery } from "../store/api/authApi/auth";
@@ -10,17 +10,18 @@ const ProfilePage = () => {
   const { t } = useTranslation();
   const { theme } = useTheme() as { theme: "light" | "dark" };
 
+
   const token = localStorage.getItem("token");
-  console.log("token", token); 
+  console.log("token", token);
 
   let userId: string | null = null;
   if (token) {
-    const payload = jwtDecode<{ sid: string }>(token); 
-    console.log("payload", payload); 
+    const payload = jwtDecode<{ sid: string }>(token);
+    console.log("payload", payload);
     userId = payload.sid;
   }
 
-  console.log("userId", userId); 
+  console.log("userId", userId);
 
   const { data } = useUserProfileQuery(userId || "");
 

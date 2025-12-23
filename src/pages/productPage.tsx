@@ -22,10 +22,10 @@ const ProductPage = () => {
   const { t } = useTranslation();
   const { theme } = useTheme() as { theme: "light" | "dark" };
 
-  const { data: brandData } = useGetBrandsQuery();
-  const { data: colorData } = useGetColorsQuery();
-  const { data: categoryData } = useGetCategoriesQuery();
-  const { data: productData } = useGetProductsQuery();
+  const { data: brandData = [] } = useGetBrandsQuery();
+  const { data: colorData = [] } = useGetColorsQuery();
+  const { data: categoryData = [] } = useGetCategoriesQuery();
+  const { data: productData = [] } = useGetProductsQuery();
 
   const [favorites, setFavorites] = useState<Product[]>([]);
 
@@ -117,7 +117,7 @@ const ProductPage = () => {
               <h1 className="text-lg font-semibold mb-3">{t("amin.maga3")}</h1>
 
               <div className="flex flex-col gap-2 max-h-40 overflow-y-auto pr-1">
-                {brandData?.data.map((brand) => (
+                {brandData?.map((brand) => (
                   <label
                     key={brand.id}
                     className={`
@@ -149,7 +149,7 @@ const ProductPage = () => {
               <h1 className="text-lg font-semibold mb-3">{t("amin.maga4")}</h1>
 
               <div className="flex flex-col gap-2">
-                {colorData?.data.map((color) => (
+                {colorData?.map((color) => (
                   <label
                     key={color.id}
                     className="
@@ -187,7 +187,7 @@ const ProductPage = () => {
     scrollbar-thin scrollbar-thumb-[#ffd36a]/70 scrollbar-track-transparent
   `}
               >
-                {categoryData?.data.map((category) => (
+                {categoryData?.map((category) => (
                   <div
                     key={category.id}
                     className={`
@@ -235,7 +235,7 @@ const ProductPage = () => {
         </section>
 
         <section className="w-[70%] flex flex-wrap gap-[20px]">
-          {productData?.data?.products.map((product) => {
+          {productData?.map((product) => {
             const isFavorite = favorites.some((f) => f.id === product.id);
             return (
               <div

@@ -196,7 +196,7 @@ const Layout = () => {
         </button>
         <section className="max-h-[500px] flex justify-between">
           <div className="overflow-auto w-1/2">
-            {data?.data.map((category) => (
+            {data?.map((category) => (
               <div
                 key={category.id}
                 onClick={() => setActiveCategoryId(category.id)}

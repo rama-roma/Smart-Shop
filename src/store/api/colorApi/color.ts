@@ -5,14 +5,13 @@ export interface Color {
     colorName: string;
     colorCode: string;
 }
-interface ColorsResponse{
-    colors: Color[]
-}
+
 
 export const colorApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getColors: builder.query<ColorsResponse, void>({   
-            query: () => "/Color/get-colors"
+        getColors: builder.query<Color[], void>({   
+            query: () => "/Color/get-colors",
+            transformResponse: (res: { data: Color[] }) => res.data,
         }),         
     })
 });

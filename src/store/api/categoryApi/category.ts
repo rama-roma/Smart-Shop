@@ -8,17 +8,16 @@ export interface Category {
   subCategories: SubCategory[];
 }
 
-interface CategoriesResponse{
-    categories: Category[]
-}
 
 export const categoryApi = baseApi.injectEndpoints({
-    endpoints: (builder) => ({
-        getCategories: builder.query<CategoriesResponse, void>({
-            query: () => "/Category/get-categories"
-        }),         
-    })
+  endpoints: (builder) => ({
+    getCategories: builder.query<Category[], void>({
+      query: () => "/Category/get-categories",
+      transformResponse: (res: { data: Category[] }) => res.data,
+    }),
+  }),
 });
+
 
 export const categoryByIdApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -30,6 +29,9 @@ export const categoryByIdApi = baseApi.injectEndpoints({
 });
 
 export const {
-    useGetCategoriesQuery,
-    useGetCategoryByIdQuery
-} = {...categoryApi, ...categoryByIdApi};
+  useGetCategoriesQuery: useGetCategoriesQuery,
+} = categoryApi;
+
+export const {
+  useGetCategoryByIdQuery: useGetCategoryByIdQuery,
+} = categoryByIdApi;

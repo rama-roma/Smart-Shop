@@ -6,10 +6,9 @@ import { useNavigate } from "react-router-dom";
 const CatalogPage = () => {
   const { t } = useTranslation();
   const { theme } = useTheme() as { theme: "light" | "dark" };
-  const { data } = useGetCategoriesQuery();
-  const navigate = useNavigate();
+  const { data  = [] } = useGetCategoriesQuery();
 
-  
+  const navigate = useNavigate();
 
   return (
     <main>
@@ -36,7 +35,7 @@ const CatalogPage = () => {
         `}
       >
         <div className="flex flex-wrap items-center justify-center gap-[30px]">
-          {data?.data.map((category) => (
+          {data.map((category) => (
             <div
               key={category.id}
               onClick={() => navigate(`/catalogById/${category.id}`)}

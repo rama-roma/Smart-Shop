@@ -1,33 +1,21 @@
-import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router";
+import { useTranslation } from "react-i18next";
+import { Heart, Eye, ShoppingCart } from "lucide-react";
 import Swipper from "../components/swipper";
 // @ts-ignore
 import img1 from "../assets/banner1.jpg";
 // @ts-ignore
 import img2 from "../assets/banner2.png";
-// @ts-ignore;
+// @ts-ignore
 import img3 from "../assets/banner3.png";
-import { useGetProductsQuery } from "../store/api/productApi/product";
-import { useAddToCartMutation } from "../store/api/cartApi/cart";
-import { Eye, Heart, ShoppingCart } from "lucide-react";
-import { Link } from "react-router";
 
-interface Product {
-  id: number;
-  productName: string;
-  price: number;
-  discountPrice?: number;
-  hasDiscount?: boolean;
-  color?: string;
-  image?: string;
-}
+import { useGetProductsQuery, Product } from "../store/api/productApi/product";
+import { useAddToCartMutation } from "../store/api/cartApi/cart";
 
 const HomePage = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const { data } = useGetProductsQuery();
-
+  const { data: products } = useGetProductsQuery();
   const [addToCart] = useAddToCartMutation();
 
   const handleClickAdd = (productId: number) => {
@@ -37,20 +25,17 @@ const HomePage = () => {
   const [favorites, setFavorites] = useState<Product[]>([]);
 
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("favorites") || "[]");
+    const stored = JSON.parse(
+      localStorage.getItem("favorites") || "[]"
+    ) as Product[];
     setFavorites(stored);
   }, []);
 
   const handleAddToFavorites = (product: Product) => {
     const exists = favorites.some((f) => f.id === product.id);
-
-    let updatedFavorites: Product[];
-
-    if (exists) {
-      updatedFavorites = favorites.filter((f) => f.id !== product.id);
-    } else {
-      updatedFavorites = [...favorites, product];
-    }
+    const updatedFavorites = exists
+      ? favorites.filter((f) => f.id !== product.id)
+      : [...favorites, product];
 
     setFavorites(updatedFavorites);
     localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
@@ -72,12 +57,13 @@ const HomePage = () => {
         </div>
 
         <section className="flex flex-wrap gap-6">
-          {data?.data?.products?.map((e: Product) => {
+          {products?.map((e) => {
             const isFavorite = favorites.some((f) => f.id === e.id);
+
             return (
               <div
                 key={e.id}
-                className="w-56 rounded-xl shadow-2xl hover:shadow-xl transition relative flex flex-col p-4 gap-3 "
+                className="w-56 rounded-xl shadow-2xl hover:shadow-xl transition relative flex flex-col p-4 gap-3"
               >
                 <h1
                   className={`text-white text-xs w-14 text-center font-bold px-2 py-1 rounded-md ${
@@ -134,8 +120,7 @@ const HomePage = () => {
                   onClick={() => handleClickAdd(e.id)}
                   className="mt-auto flex items-center justify-center gap-2 font-semibold py-2 rounded-lg bg-yellow-400 hover:bg-yellow-500 text-black"
                 >
-                  <ShoppingCart size={18} />
-                  {t("main.lol6")}
+                  <ShoppingCart size={18} /> {t("main.lol6")}
                 </button>
               </div>
             );
@@ -157,12 +142,13 @@ const HomePage = () => {
         </div>
 
         <section className="flex flex-wrap gap-6">
-          {data?.data?.products?.map((e: Product) => {
+          {products?.map((e) => {
             const isFavorite = favorites.some((f) => f.id === e.id);
+
             return (
               <div
                 key={e.id}
-                className="w-56 rounded-xl shadow-2xl hover:shadow-xl transition relative flex flex-col p-4 gap-3 "
+                className="w-56 rounded-xl shadow-2xl hover:shadow-xl transition relative flex flex-col p-4 gap-3"
               >
                 <h1
                   className={`text-white text-xs w-14 text-center font-bold px-2 py-1 rounded-md ${
@@ -219,8 +205,7 @@ const HomePage = () => {
                   onClick={() => handleClickAdd(e.id)}
                   className="mt-auto flex items-center justify-center gap-2 font-semibold py-2 rounded-lg bg-yellow-400 hover:bg-yellow-500 text-black"
                 >
-                  <ShoppingCart size={18} />
-                  {t("main.lol6")}
+                  <ShoppingCart size={18} /> {t("main.lol6")}
                 </button>
               </div>
             );
@@ -242,12 +227,13 @@ const HomePage = () => {
         </div>
 
         <section className="flex flex-wrap gap-6">
-          {data?.data?.products?.map((e: Product) => {
+          {products?.map((e) => {
             const isFavorite = favorites.some((f) => f.id === e.id);
+
             return (
               <div
                 key={e.id}
-                className="w-56 rounded-xl shadow-2xl hover:shadow-xl transition relative flex flex-col p-4 gap-3 "
+                className="w-56 rounded-xl shadow-2xl hover:shadow-xl transition relative flex flex-col p-4 gap-3"
               >
                 <h1
                   className={`text-white text-xs w-14 text-center font-bold px-2 py-1 rounded-md ${
@@ -304,8 +290,7 @@ const HomePage = () => {
                   onClick={() => handleClickAdd(e.id)}
                   className="mt-auto flex items-center justify-center gap-2 font-semibold py-2 rounded-lg bg-yellow-400 hover:bg-yellow-500 text-black"
                 >
-                  <ShoppingCart size={18} />
-                  {t("main.lol6")}
+                  <ShoppingCart size={18} /> {t("main.lol6")}
                 </button>
               </div>
             );
