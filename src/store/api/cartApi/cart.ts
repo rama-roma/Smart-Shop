@@ -1,4 +1,4 @@
-import { baseApi } from "../../utils/api";
+import { API, baseApi } from "../../utils/api";
 
 export const cartApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -9,9 +9,8 @@ export const cartApi = baseApi.injectEndpoints({
 
     addToCart: builder.mutation<void, number>({
       query: (id) => ({
-        url: "/Cart/add-product-to-cart",
+        url: `/Cart/add-product-to-cart?id=${id}`,
         method: "POST",
-        body: { id }, 
       }),
       invalidatesTags: ["Cart"],
     }),

@@ -10,7 +10,7 @@ export const brandApi = baseApi.injectEndpoints({
         getBrands: builder.query<Brand[], void>({
             query: () => "/Brand/get-brands",
             transformResponse: (res: { data: Brand[] }) => res.data,
-        }),         
+        }),   
     })
 });
 export const {

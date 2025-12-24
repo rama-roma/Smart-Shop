@@ -1,6 +1,7 @@
 import {
   Facebook,
   Heart,
+  Home,
   Instagram,
   LogIn,
   Search,
@@ -51,193 +52,356 @@ const Layout = () => {
 
   const { isLoggedIn, logout } = useAuth();
 
-
   return (
     <>
-      <header className="max-w-[1500px] m-auto p-4">
-        <nav className="flex items-center justify-between">
-          <Link to="/homePage">
-            <img className="w-40" src={logo} />
-          </Link>
+      <div className="hidden md:block">
+        <header className="max-w-[1500px] m-auto p-4">
+          <nav className="flex items-center justify-between">
+            <Link to="/homePage">
+              <img className="w-40" src={logo} />
+            </Link>
 
-          <div
-            onClick={() => setOpenCatalog(true)}
-            className="flex gap-[10px] bg-[#ffd36a] rounded-[10px] text-black p-3 w-35 justify-center items-center cursor-pointer"
-          >
-            <WalletCards />
-            <h1 className="font-bold">{t("navbar.title")}</h1>
-          </div>
+            <div
+              onClick={() => setOpenCatalog(true)}
+              className="flex gap-[10px] bg-[#ffd36a] rounded-[10px] text-black p-3 w-35 justify-center items-center cursor-pointer"
+            >
+              <WalletCards />
+              <h1 className="font-bold">{t("navbar.title")}</h1>
+            </div>
 
-          <div className="relative w-170">
-            <input
-              type="search"
-              placeholder={t("navbar.title1")}
-              className={`w-full rounded-[10px] border-[3px] p-2 pl-9 
+            <div className="relative w-170">
+              <input
+                type="search"
+                placeholder={t("navbar.title1")}
+                className={`w-full rounded-[10px] border-[3px] p-2 pl-9 
                 ${
                   theme === "dark"
                     ? "border-[#555] placeholder-[#aaa] text-white bg-[#2b2b2b]"
                     : "border-[#ffd36a] placeholder-black text-black bg-white"
                 }
                 focus:outline-none`}
-            />
-            <span
-              className={`absolute left-2 top-1/2 transform -translate-y-1/2 
+              />
+              <span
+                className={`absolute left-2 top-1/2 transform -translate-y-1/2 
                 ${theme === "dark" ? "text-[#aaa]" : "text-black"}`}
-            >
-              <Search size={16} />
-            </span>
-          </div>
+              >
+                <Search size={16} />
+              </span>
+            </div>
 
-          <div className="flex flex-col items-center gap-[5px]">
-            <Link to="/cartPage" className="relative">
-              <ShoppingBasket />
-              {cartData?.totalProducts > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
-                  {cartData.totalProducts}
-                </span>
+            <div className="flex flex-col items-center gap-[5px]">
+              <Link to="/cartPage" className="relative">
+                <ShoppingBasket />
+                {cartData?.totalProducts > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
+                    {cartData.totalProducts}
+                  </span>
+                )}
+              </Link>
+              <h1 className="text-[13px]">{t("navbar.title2")}</h1>
+            </div>
+
+            <div className="flex flex-col items-center gap-[5px]">
+              <Link to="/wishlistPage">
+                <Heart />
+              </Link>
+              <h1 className="text-[13px]">{t("navbar.title3")}</h1>
+            </div>
+
+            <div className="flex flex-col items-center gap-[5px]">
+              {isLoggedIn ? (
+                <>
+                  <Link to="/profilePage">
+                    <User />
+                  </Link>
+                  <h1 className="text-[13px]">{t("navbar.title4")}</h1>
+                </>
+              ) : (
+                <>
+                  <Link to="/loginPage">
+                    <LogIn />
+                  </Link>
+                  <h1 className="text-[13px]">{t("navbar.title16")}</h1>
+                </>
               )}
-            </Link>
-            <h1 className="text-[13px]">{t("navbar.title2")}</h1>
-          </div>
-
-          <div className="flex flex-col items-center gap-[5px]">
-            <Link to="/wishlistPage">
-              <Heart />
-            </Link>
-            <h1 className="text-[13px]">{t("navbar.title3")}</h1>
-          </div>
-
-          <div className="flex flex-col items-center gap-[5px]">
-            {isLoggedIn ? (
-              <>
-                <Link to="/profilePage">
-                  <User />
-                </Link>
-                <h1 className="text-[13px]">{t("navbar.title4")}</h1>
-              </>
-            ) : (
-              <>
-                <Link to="/loginPage">
-                  <LogIn />
-                </Link>
-                <h1 className="text-[13px]">{t("navbar.title16")}</h1>
-              </>
-            )}
-          </div>
-
-          <LanguageSelector />
-          <ButtonTheme />
-        </nav>
-      </header>
-
-      <main className="max-w-[1500px] m-auto p-4">
-        <Outlet />
-      </main>
-
-      <footer className="max-w-[1600px] m-auto bg-[#2b2a2a] rounded-tl-[20px] rounded-tr-[20px]">
-        <div className="max-w-[1500px] m-auto p-4 text-[white]">
-          <section className="flex items-start justify-between p-7">
-            <div className="flex flex-col items-start gap-[10px]">
-              <img className="w-40" src={logo} />
-              <h1>{t("navbar.title5")}</h1>
             </div>
 
-            <div className="flex flex-col items-start gap-[10px]">
-              <h1 className="text-[#727272]">{t("navbar.title6")}</h1>
-              <h1>{t("navbar.title7")}</h1>
-              <h1>{t("navbar.title8")}</h1>
-              <h1>{t("navbar.title9")}</h1>
-            </div>
+            <LanguageSelector />
+            <ButtonTheme />
+          </nav>
+        </header>
 
-            <div className="flex flex-col items-start gap-[10px]">
-              <h1 className="text-[#727272]">{t("navbar.title10")}</h1>
-              <h1>{t("navbar.title11")}</h1>
-              <h1>{t("navbar.title12")}</h1>
-              <h1>{t("navbar.title13")}</h1>
-            </div>
+        <main className="max-w-[1500px] m-auto p-4">
+          <Outlet />
+        </main>
 
-            <article className="p-4 border-[2px] rounded-[10px] border-[#bdbcbc] w-60 h-80 flex flex-col items-center justify-center gap-[20px]">
-              <img className="w-40" src={qr} />
-              <h1 className="text-[13px] text-center text-[#727272]">
-                {t("navbar.title14")}
-              </h1>
-            </article>
-          </section>
-        </div>
+        <footer className="max-w-[1600px] m-auto bg-[#2b2a2a] rounded-tl-[20px] rounded-tr-[20px]">
+          <div className="max-w-[1500px] m-auto p-4 text-[white]">
+            <section className="flex items-start justify-between p-7">
+              <div className="flex flex-col items-start gap-[10px]">
+                <img className="w-40" src={logo} />
+                <h1>{t("navbar.title5")}</h1>
+              </div>
 
-        <div className="flex justify-between items-center p-10">
-          <h1 className="text-[white]">{t("navbar.title15")}</h1>
-          <div className="flex items-center gap-[10px] text-[white]">
-            <Instagram size={30} />
-            <Facebook size={30} />
-            <Send size={30} />
+              <div className="flex flex-col items-start gap-[10px]">
+                <h1 className="text-[#727272]">{t("navbar.title6")}</h1>
+                <h1>{t("navbar.title7")}</h1>
+                <h1>{t("navbar.title8")}</h1>
+                <h1>{t("navbar.title9")}</h1>
+              </div>
+
+              <div className="flex flex-col items-start gap-[10px]">
+                <h1 className="text-[#727272]">{t("navbar.title10")}</h1>
+                <h1>{t("navbar.title11")}</h1>
+                <h1>{t("navbar.title12")}</h1>
+                <h1>{t("navbar.title13")}</h1>
+              </div>
+
+              <article className="p-4 border-[2px] rounded-[10px] border-[#bdbcbc] w-60 h-80 flex flex-col items-center justify-center gap-[20px]">
+                <img className="w-40" src={qr} />
+                <h1 className="text-[13px] text-center text-[#727272]">
+                  {t("navbar.title14")}
+                </h1>
+              </article>
+            </section>
           </div>
-        </div>
-      </footer>
 
-      <Modal
-        title={t("main.lol7")}
-        open={openCatalog}
-        footer={null}
-        width={1200}
-        onCancel={() => {
-          setOpenCatalog(false);
-          setActiveCategoryId(null);
-        }}
-      >
-        <button
-          className="text-[blue] cursor-alias"
-          onClick={handleGoToCatalog}
+          <div className="flex justify-between items-center p-10">
+            <h1 className="text-[white]">{t("navbar.title15")}</h1>
+            <div className="flex items-center gap-[10px] text-[white]">
+              <Instagram size={30} />
+              <Facebook size={30} />
+              <Send size={30} />
+            </div>
+          </div>
+        </footer>
+
+        <Modal
+          title={t("main.lol7")}
+          open={openCatalog}
+          footer={null}
+          width={1200}
+          onCancel={() => {
+            setOpenCatalog(false);
+            setActiveCategoryId(null);
+          }}
         >
-          {t("catalogPage.cat")}
-        </button>
-        <section className="max-h-[500px] flex justify-between">
-          <div className="overflow-auto w-1/2">
-            {data?.map((category) => (
-              <div
-                key={category.id}
-                onClick={() => setActiveCategoryId(category.id)}
-                className={`p-2 border-b border-gray-300 cursor-pointer
+          <button
+            className="text-[blue] cursor-alias"
+            onClick={handleGoToCatalog}
+          >
+            {t("catalogPage.cat")}
+          </button>
+          <section className="max-h-[500px] flex justify-between">
+            <div className="overflow-auto w-1/2">
+              {data?.map((category) => (
+                <div
+                  key={category.id}
+                  onClick={() => setActiveCategoryId(category.id)}
+                  className={`p-2 border-b border-gray-300 cursor-pointer
                   ${
                     activeCategoryId === category.id
                       ? "bg-gray-200 font-semibold"
                       : "hover:bg-gray-100"
                   }`}
+                >
+                  <div className="flex  items-center justify-between">
+                    <h2>{category.categoryName}</h2>
+                    <img
+                      className="w-20 h-10 rounded-2xl"
+                      src={`https://store-api.softclub.tj/images/${category.categoryImage}`}
+                      alt=""
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="overflow-auto w-1/2">
+              {!activeCategory ? (
+                <p className="p-4 text-gray-400">Выберите категорию</p>
+              ) : activeCategory.subCategories.length === 0 ? (
+                <p className="p-4 text-gray-400">Нет подкатегорий</p>
+              ) : (
+                activeCategory.subCategories.map((sub) => (
+                  <div
+                    key={sub.id}
+                    onClick={() => {
+                      navigate(`/catalogById/${activeCategory.id}`);
+                      setOpenCatalog(false);
+                      setActiveCategoryId(null);
+                    }}
+                    className="p-2 border-b border-gray-300"
+                  >
+                    <h2>{sub.subCategoryName}</h2>
+                  </div>
+                ))
+              )}
+            </div>
+          </section>
+        </Modal>
+      </div>
+
+      <div className="block md:hidden">
+        <header
+          className={`sticky top-0 z-50 px-4 py-3 flex items-center justify-between
+    ${theme === "dark" ? "bg-[#1f1f1f] text-white" : "bg-white text-black"}
+    shadow`}
+        >
+          <button onClick={() => setOpenCatalog(true)}>
+            <WalletCards />
+          </button>
+
+          <Link to="/homePage">
+            <img src={logo} className="w-28" />
+          </Link>
+
+          <div className="flex items-center gap-3">
+            <LanguageSelector />
+            <ButtonTheme />
+          </div>
+        </header>
+
+        <div className="px-4 mt-3">
+          <div className="relative">
+            <input
+              type="search"
+              placeholder={t("navbar.title1")}
+              className={`w-full rounded-xl border-2 p-2 pl-9
+        ${
+          theme === "dark"
+            ? "bg-[#2b2b2b] border-[#555] text-white placeholder-[#aaa]"
+            : "bg-white border-[#ffd36a] text-black placeholder-black"
+        }`}
+            />
+            <span className="absolute left-3 top-1/2 -translate-y-1/2">
+              <Search size={16} />
+            </span>
+          </div>
+        </div>
+
+        <main className="p-4 pb-24">
+          <Outlet />
+        </main>
+
+        <footer
+          className={`mt-10 p-6 text-center text-sm
+  ${
+    theme === "dark" ? "bg-zinc-900 text-zinc-400" : "bg-gray-100 text-gray-600"
+  }`}
+        >
+          <img src={logo} className="w-28 mx-auto mb-3" />
+          <p>{t("navbar.title5")}</p>
+
+          <div className="flex justify-center gap-4 mt-4">
+            <Instagram />
+            <Facebook />
+            <Send />
+          </div>
+        </footer>
+
+        <nav
+          className={`fixed bottom-0 left-0 right-0 flex justify-around items-center py-3
+    ${theme === "dark" ? "bg-[#1f1f1f]" : "bg-white"}
+    border-t`}
+        >
+          <Link to="/homePage" className="flex flex-col items-center text-xs">
+            <Home />
+            {t("navbar.title")}
+          </Link>
+
+          <Link
+            to="/wishlistPage"
+            className="flex flex-col items-center text-xs"
+          >
+            <Heart />
+            {t("navbar.title3")}
+          </Link>
+
+          <Link
+            to="/cartPage"
+            className="relative flex flex-col items-center text-xs"
+          >
+            <ShoppingBasket />
+            {cartData?.totalProducts > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
+                {cartData.totalProducts}
+              </span>
+            )}
+            {t("navbar.title2")}
+          </Link>
+
+          {isLoggedIn ? (
+            <Link
+              to="/profilePage"
+              className="flex flex-col items-center text-xs"
+            >
+              <User />
+              {t("navbar.title4")}
+            </Link>
+          ) : (
+            <Link
+              to="/loginPage"
+              className="flex flex-col items-center text-xs"
+            >
+              <LogIn />
+              {t("navbar.title16")}
+            </Link>
+          )}
+        </nav>
+
+        <Modal
+          open={openCatalog}
+          footer={null}
+          width="100%"
+          onCancel={() => {
+            setOpenCatalog(false);
+            setActiveCategoryId(null);
+          }}
+        >
+          <h1 className="text-lg font-bold mb-4">{t("main.lol7")}</h1>
+
+          <button className="text-blue-600 mb-4" onClick={handleGoToCatalog}>
+            {t("catalogPage.cat")}
+          </button>
+
+          <div className="flex flex-col gap-2 max-h-[60vh] overflow-auto">
+            {data?.map((category) => (
+              <div
+                key={category.id}
+                onClick={() => setActiveCategoryId(category.id)}
+                className={`p-3 rounded-lg cursor-pointer
+        ${
+          activeCategoryId === category.id
+            ? "bg-gray-200 dark:bg-zinc-800"
+            : "hover:bg-gray-100 dark:hover:bg-zinc-900"
+        }`}
               >
-                <div className="flex  items-center justify-between">
-                  <h2>{category.categoryName}</h2>
+                <div className="flex justify-between items-center">
+                  <h2 className="font-semibold">{category.categoryName}</h2>
                   <img
-                    className="w-20 h-10 rounded-2xl"
+                    className="w-16 h-8 object-cover rounded"
                     src={`https://store-api.softclub.tj/images/${category.categoryImage}`}
-                    alt=""
                   />
                 </div>
               </div>
             ))}
+
+            {activeCategory?.subCategories.map((sub) => (
+              <div
+                key={sub.id}
+                onClick={() => {
+                  navigate(`/catalogById/${activeCategory.id}`);
+                  setOpenCatalog(false);
+                  setActiveCategoryId(null);
+                }}
+                className="pl-6 py-2 text-sm border-l dark:border-zinc-700 cursor-pointer"
+              >
+                {sub.subCategoryName}
+              </div>
+            ))}
           </div>
-          <div className="overflow-auto w-1/2">
-            {!activeCategory ? (
-              <p className="p-4 text-gray-400">Выберите категорию</p>
-            ) : activeCategory.subCategories.length === 0 ? (
-              <p className="p-4 text-gray-400">Нет подкатегорий</p>
-            ) : (
-              activeCategory.subCategories.map((sub) => (
-                <div
-                  key={sub.id}
-                  onClick={() => {
-                    navigate(`/catalogById/${activeCategory.id}`);
-                    setOpenCatalog(false);
-                    setActiveCategoryId(null);
-                  }}
-                  className="p-2 border-b border-gray-300"
-                >
-                  <h2>{sub.subCategoryName}</h2>
-                </div>
-              ))
-            )}
-          </div>
-        </section>
-      </Modal>
+        </Modal>
+      </div>
     </>
   );
 };
