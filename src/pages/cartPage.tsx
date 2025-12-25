@@ -46,7 +46,7 @@ const CartPage = () => {
     } catch {
       alert("Backend not reachable");
     }
-    setLoading(false);
+
   };
   const { data } = useGetCartQuery();
   const { t } = useTranslation();
@@ -62,7 +62,7 @@ const CartPage = () => {
     (sum, item) => sum + item.product.price * item.quantity,
     0
   );
-  
+
   useEffect(() => {
     const stored = JSON.parse(
       localStorage.getItem("favorites") || "[]"
