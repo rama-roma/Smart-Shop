@@ -64,7 +64,7 @@ const Layout = () => {
       (sum: number, item: any) => sum + item.quantity,
       0
     ) ?? 0;
-if(!localStorage.getItem("token")) cartCount = 0
+  if(!localStorage.getItem("token")) cartCount = 0
   return (
     <>
       <div className="hidden md:block">

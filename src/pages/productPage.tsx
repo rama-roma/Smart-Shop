@@ -11,6 +11,7 @@ import { Eye, Heart, ShoppingCart, RotateCcw } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { useAddToCartMutation } from "../store/api/cartApi/cart";
+import { Input } from "antd";
 
 const ProductPage = () => {
   const { t } = useTranslation();
@@ -42,7 +43,10 @@ const ProductPage = () => {
 
   const productData = colorId ? colorProducts : baseProducts;
 
+   const [search, setSearch] = useState(null);
+
   const filteredProducts = productData.filter((product) => {
+    // if (!product.productName.toLowerCase().includes(search.toLowerCase())) return false
     if (categoryId && product.categoryId !== categoryId) return false;
     if (subCategoryIds.length === 0) return true;
     return product.subCategoryId
@@ -82,11 +86,13 @@ const ProductPage = () => {
     localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
   };
 
+
   return (
     <>
       <div className="hidden md:block">
         <main className="flex mt-10 items-start gap-[20px] justify-start">
           <section className="w-[30%] flex flex-col items-start justify-center gap-[10px]">
+            <Input style={{width:"350px", height:"40px"}} placeholder="Search..." onChange={(e) => setSearch(e.target.value)} />
             <div className="flex justify-between items-center w-80 mb-4">
               <h2 className="text-xl font-bold">{t("amin.maga")}</h2>
               <button
@@ -197,6 +203,7 @@ const ProductPage = () => {
               </section>
             </div>
           </section>
+
           <section className="w-[70%] flex flex-wrap gap-[20px]">
             {filteredProducts.map((product) => {
               const isFavorite = favorites.some((f) => f.id === product.id);
