@@ -34,3 +34,39 @@ body, .light, .dark {
 .swiper-pagination-bullet-active {
   @apply opacity-100;
 }
+
+
+.bee-swiper .swiper-button-next,
+.bee-swiper .swiper-button-prev {
+  width: 23px;
+  height: 23px;
+  background: rgba(255, 215, 100, 0.25);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 193, 7, 0.6);
+  transition: all 0.3s ease;
+  color: #FFB703 !important; 
+}
+
+
+.bee-swiper .swiper-button-next::after,
+.bee-swiper .swiper-button-prev::after {
+  font-size: 14px !important;
+  font-weight: bold;
+}
+
+
+.bee-swiper .swiper-button-next:hover,
+.bee-swiper .swiper-button-prev:hover {
+  background: #FFD36A;
+  transform: scale(1.1);
+}
+
+.bee-swiper .swiper-button-next,
+.bee-swiper .swiper-button-prev {
+  opacity: 0;
+}
+
+.bee-swiper:hover .swiper-button-next,
+.bee-swiper:hover .swiper-button-prev {
+  opacity: 1;
+}

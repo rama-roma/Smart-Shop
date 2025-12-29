@@ -3,260 +3,285 @@ import { useGetProductByIdQuery } from "../store/api/productApi/product";
 import { useTranslation } from "react-i18next";
 import { Copy, MessageCircleMore, ShoppingCart } from "lucide-react";
 import { useState } from "react";
+import LoadingFunc from "../components/loadingFunc";
 import { useTheme } from "../contextApi/theme/ThemeContext";
-
+import { useAddToCartMutation } from "../store/api/cartApi/cart";
+import { Modal, notification } from "antd";
 
 const InfoPage = () => {
   const { id } = useParams();
   const { data } = useGetProductByIdQuery(Number(id));
-
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = (text: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    });
-  };
-
   const { theme } = useTheme();
 
-  if (!data) return <div>Loading...</div>;
+  const [copied, setCopied] = useState(false);
+  const [addToCart] = useAddToCartMutation();
+  const handleClickAdd = (productId: number) => {
+    addToCart(productId);
+  };
+  const [openDialog, setOpenDialog] = useState(false);
+  const [animatingId, setAnimatingId] = useState<number | null>(null);
+
+  if (!data)
+    return (
+      <div className="h-[70vh] flex items-center justify-center">
+        <LoadingFunc />
+      </div>
+    );
+
+  const imageSrc = data.images?.length
+    ? `https://store-api.softclub.tj/images/${data.images[0].images}`
+    : "";
+
+  const bg =
+    theme === "dark" ? "bg-[#0f0f0f] text-white" : "bg-[#f6f7f9] text-black";
+
+  const card =
+    theme === "dark"
+      ? "bg-[#1b1b1b] border-white/10"
+      : "bg-white border-black/10";
+
+  const Row = ({ label, value }: { label: string; value: string }) => (
+    <div className="flex justify-between items-center">
+      <span className="text-gray-500">{label}</span>
+      <span className="font-medium">{value}</span>
+    </div>
+  );
 
   return (
     <>
-      <div className="hidden md:block">
-        <main>
-          <div className="mt-10 mb-10">
-            <button
-              className="text-start w-40 p-2 border rounded-[5px] bg-[#ffd36a] border-[#ffd36a] text-black"
-              onClick={() => navigate(-1)}
+      <div className={`hidden md:block `}>
+        <main className="mt-10 mb-20">
+          <div className="mb-6 text-sm text-blue-500">
+            <span
+              className="cursor-pointer hover:underline"
+              onClick={() => navigate("/homePage")}
             >
-              ⮜ {t("xa.xaxa7")}
-            </button>
+              {t("pol.po")}
+            </span>{" "}
+            / <span className="text-gray-400">{data.productName}</span>
           </div>
 
-          <div className="flex items-center gap-[10px]">
-            <h1 className="text-[30px]">{data.productName}</h1>
-            <p>
-              <span className="text-[grey]">{t("main.lol8")}</span> (
-              {data.color})
-            </p>
-          </div>
-
-          <div className="flex items-center gap-[10px] mt-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              width="24"
-              height="24"
-              fill="#FFA500"
-              stroke="none"
+          <section className="grid grid-cols-[580px_1fr] grid-rows-[580px_1fr] gap-10 items-start">
+            <div
+              className={`rounded-3xl border ${card} p-6 flex items-center justify-center
+            transition-all duration-500 hover:scale-[1.02]`}
             >
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <span className="mr-5">{t("main.lol9")}</span>
-            <MessageCircleMore />
-            <span>{t("main.lol10")}</span>
-          </div>
-
-          <section className="flex items-start gap-[40px] mt-6">
-            <aside className="flex flex-col gap-4">
-              {data.images.map((img, idx) => (
+              {imageSrc ? (
                 <img
-                  key={`thumb1-${idx}`}
-                  src={`https://store-api.softclub.tj/images/${img.images}`}
-                  alt={data.productName}
-                  className="w-25 h-25 object-cover rounded-[8px] shadow-2xl"
+                  src={imageSrc}
+                  className="w-full h-[530px] object-contain
+                transition-all duration-700 ease-out hover:scale-105"
                 />
-              ))}
-              {data.images.map((img, idx) => (
-                <img
-                  key={`thumb2-${idx}`}
-                  src={`https://store-api.softclub.tj/images/${img.images}`}
-                  alt={data.productName}
-                  className="w-25 h-25 object-cover rounded-[8px] shadow-2xl"
-                />
-              ))}
-              {data.images.map((img, idx) => (
-                <img
-                  key={`thumb3-${idx}`}
-                  src={`https://store-api.softclub.tj/images/${img.images}`}
-                  alt={data.productName}
-                  className="w-25 h-25 object-cover rounded-[8px] shadow-2xl"
-                />
-              ))}
-              {data.images.map((img, idx) => (
-                <img
-                  key={`thumb4-${idx}`}
-                  src={`https://store-api.softclub.tj/images/${img.images}`}
-                  alt={data.productName}
-                  className="w-25 h-25 object-cover rounded-[8px] shadow-2xl"
-                />
-              ))}
-            </aside>
-
-            <div>
-              <img
-                src={`https://store-api.softclub.tj/images/${data.images[0]?.images}`}
-                alt={data.productName}
-                className="w-120 h-115 object-contain rounded-[8px] shadow-2xl"
-              />
+              ) : (
+                <div className="text-gray-400">No image</div>
+              )}
             </div>
 
-            <article className="p-4 h-115 rounded-lg shadow-md border border-gray-200">
-              <div className="flex items-center justify-between w-140 p-2 border-b border-gray-100">
-                <span>{t("xa.xaxa")}</span>
-                <div className="flex items-center gap-[10px]">
-                  <h1>{data.code}</h1>
-                  <button
-                    onClick={() => handleCopy(data.code.toString())}
-                    className="p-1 rounded hover:bg-gray-200"
-                  >
-                    <Copy
-                      size={20}
-                      className={copied ? "text-green-500" : "text-black"}
-                    />
-                  </button>
-                </div>
+            <article
+              className={`rounded-3xl border ${card} p-8 space-y-6
+            transition-all duration-500`}
+            >
+              <div>
+                <h1 className="text-3xl font-bold mb-1">{data.productName}</h1>
+                <p className="text-gray-500">
+                  {t("main.lol8")} ({data.color})
+                </p>
               </div>
 
-              <div className="flex items-center justify-between w-140 p-2 border-b border-gray-100">
-                <span>{t("xa.xaxa1")}</span>
-                <h1>{data.brand}</h1>
+              <div className="flex items-center gap-4 text-sm text-gray-500">
+                <span className="flex items-center gap-2">
+                  ⭐ {t("main.lol9")}
+                </span>
+                <span className="flex items-center gap-2">
+                  <MessageCircleMore size={16} /> {t("main.lol10")}
+                </span>
               </div>
 
-              <div className="flex items-center justify-between w-140 p-2 border-b border-gray-100">
-                <span>{t("xa.xaxa2")}</span>
-                <h1>{data.color}</h1>
+              <div className="space-y-3 text-sm">
+                <Row label={t("xa.xaxa")} value={data.code} />
+                <Row label={t("xa.xaxa1")} value={data.brand} />
+                <Row label={t("xa.xaxa2")} value={data.color} />
+                <Row label={t("xa.xaxa3")} value={`$${data.price}`} />
+                <Row
+                  label={t("xa.xaxa4")}
+                  value={data.hasDiscount ? "New" : "-20%"}
+                />
+                <Row label={t("xa.xaxa5")} value={`$${data.discountPrice}`} />
               </div>
 
-              <div className="flex items-center justify-between w-140 p-2 border-b border-gray-100">
-                <span>{t("xa.xaxa3")}</span>
-                <h1>{data.price}</h1>
+              <div>
+                <p className="text-sm text-gray-500 mb-1">{t("xa.xaxa6")}</p>
+                <p className="text-sm leading-relaxed">{data.description}</p>
               </div>
 
-              <div className="flex items-center justify-between w-140 p-2 border-b border-gray-100">
-                <span>{t("xa.xaxa4")}</span>
-                <h1>{data.hasDiscount ? "New" : "-20%"}</h1>
-              </div>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(data.code.toString());
+                  setCopied(true);
+                  setTimeout(() => setCopied(false), 1500);
+                }}
+                className="text-sm flex items-center gap-2 text-gray-500 hover:text-blue-500 transition"
+              >
+                <Copy size={16} />
+                {copied ? "Copied" : "Copy code"}
+              </button>
 
-              <div className="flex items-center justify-between w-140 p-2 border-b border-gray-100">
-                <span>{t("xa.xaxa5")}</span>
-                <h1>{data.discountPrice}</h1>
-              </div>
+              <button
+                onClick={() => {
+                  if (localStorage.getItem("token")) {
+                    addToCart(data.id);
 
-              <div className="flex items-center justify-between w-140 p-2">
-                <span>{t("xa.xaxa6")}</span>
-                <h1 className="font-normal">{data.description}</h1>
-              </div>
-
-              <div className="p-2">
-                <button className="mt-auto flex w-40 items-center justify-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 rounded-lg">
-                  <ShoppingCart size={18} />
-                  {t("main.lol6")}
-                </button>
-              </div>
+                    notification.success({
+                      message: t("set.ttt"),
+                      placement: "bottomRight",
+                      duration: 2,
+                    });
+                  } else {
+                    setOpenDialog(true);
+                  }
+                }}
+                className="w-full mt-4 py-4 rounded-2xl
+  bg-amber-300 text-black
+  font-semibold text-lg
+  flex items-center justify-center gap-2
+  transition-all duration-300
+  hover:scale-[1.02] active:scale-[0.97]"
+              >
+                <ShoppingCart size={20} />
+                {t("main.lol6")}
+              </button>
             </article>
           </section>
         </main>
+        <Modal
+          open={openDialog}
+          onCancel={() => setOpenDialog(false)}
+          onOk={() => {
+            setOpenDialog(false);
+            navigate("/loginPage");
+          }}
+          centered
+          okText={t("set.t6")}
+          cancelButtonProps={{ style: { display: "none" } }}
+          okButtonProps={{
+            style: {
+              background: "linear-gradient(135deg, #FFD36A, #FFB703)",
+              color: "#2b2b2b",
+              borderRadius: "12px",
+              border: "none",
+              fontWeight: 600,
+              padding: "6px 20px",
+              boxShadow: "0 6px 15px rgba(255, 193, 7, 0.4)",
+            },
+          }}
+          styles={{
+            content: {
+              borderRadius: "20px",
+              background: "linear-gradient(180deg, #FFF6D6, #FFE9A3)",
+              boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+              padding: "30px",
+            },
+            header: {
+              borderBottom: "none",
+              textAlign: "center",
+            },
+            footer: {
+              borderTop: "none",
+              textAlign: "center",
+            },
+          }}
+          title={
+            <div style={{ fontSize: "22px", fontWeight: 700 }}>
+              🐝 {t("set.t")}
+            </div>
+          }
+        >
+          <p
+            style={{
+              textAlign: "center",
+              fontSize: "16px",
+              color: "#3a3a3a",
+              marginTop: "10px",
+              lineHeight: "1.5",
+            }}
+          >
+            {t("set.tt")}
+          </p>
+        </Modal>
       </div>
 
-
       <div className="block md:hidden p-4">
-        <button
-          className="w-32 p-2 mb-4 bg-[#ffd36a] rounded-lg text-black font-semibold"
-          onClick={() => navigate(-1)}
+        <div
+          className={`rounded-3xl border ${card} p-4 mb-4 flex items-center justify-center`}
         >
-          {t("xa.xaxa7")}
-        </button>
+          {imageSrc ? (
+            <img
+              src={imageSrc}
+              className="w-full h-[300px] object-contain transition-all duration-500"
+            />
+          ) : (
+            <div className="text-gray-400">No image</div>
+          )}
+        </div>
 
-        <div className="flex flex-col gap-3">
-          <h1 className="text-xl font-bold">{data.productName}</h1>
-          <p className="text-sm text-gray-400">
+        <div className={`rounded-3xl border ${card} p-4 space-y-4`}>
+          <h1 className="text-2xl font-bold">{data.productName}</h1>
+          <p className="text-gray-500">
             {t("main.lol8")} ({data.color})
           </p>
 
-          <div className="flex items-center gap-3 text-sm">
-            <span className="text-yellow-400">★</span>
-            <span>{t("main.lol9")}</span>
-            <MessageCircleMore size={16} />
-            <span>{t("main.lol10")}</span>
+          <div className="flex items-center gap-4 text-sm text-gray-500">
+            <span className="flex items-center gap-2">⭐ {t("main.lol9")}</span>
+            <span className="flex items-center gap-2">
+              <MessageCircleMore size={16} /> {t("main.lol10")}
+            </span>
           </div>
 
-          <div className="flex gap-2 overflow-x-auto mt-2">
-            {data.images.map((img, idx) => (
-              <img
-                key={idx}
-                src={`https://store-api.softclub.tj/images/${img.images}`}
-                alt={data.productName}
-                className="w-full h-full object-cover rounded-lg flex-shrink-0 shadow-md"
-              />
-            ))}
+          <div className="space-y-2 text-sm">
+            <Row label={t("xa.xaxa")} value={data.code} />
+            <Row label={t("xa.xaxa1")} value={data.brand} />
+            <Row label={t("xa.xaxa2")} value={data.color} />
+            <Row label={t("xa.xaxa3")} value={`$${data.price}`} />
+            <Row
+              label={t("xa.xaxa4")}
+              value={data.hasDiscount ? "New" : "-20%"}
+            />
+            <Row label={t("xa.xaxa5")} value={`$${data.discountPrice}`} />
           </div>
 
-          <div
-            className={`mt-4 p-4 rounded-xl shadow-md border
-        ${
-          theme === "dark"
-            ? "bg-[#2b2b2b] text-white border-[#555]"
-            : "bg-white text-black border-gray-200"
-        }`}
+          <p className="text-sm text-gray-500">{t("xa.xaxa6")}</p>
+          <p className="text-sm leading-relaxed">{data.description}</p>
+
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(data.code.toString());
+              setCopied(true);
+              setTimeout(() => setCopied(false), 1500);
+            }}
+            className="text-sm flex items-center gap-2 text-gray-500 hover:text-blue-500 transition"
           >
-            <div className="flex justify-between items-center mb-2">
-              <span>{t("xa.xaxa")}</span>
-              <div className="flex items-center gap-2">
-                <span>{data.code}</span>
-                <button
-                  onClick={() => handleCopy(data.code.toString())}
-                  className="p-1 rounded hover:bg-gray-300"
-                >
-                  <Copy
-                    size={18}
-                    className={
-                      copied
-                        ? "text-green-500"
-                        : theme === "dark"
-                        ? "text-white"
-                        : "text-black"
-                    }
-                  />
-                </button>
-              </div>
-            </div>
+            <Copy size={16} /> {copied ? "Copied" : "Copy code"}
+          </button>
 
-            <div className="flex justify-between mb-1">
-              <span>{t("xa.xaxa1")}</span>
-              <span>{data.brand}</span>
-            </div>
-            <div className="flex justify-between mb-1">
-              <span>{t("xa.xaxa2")}</span>
-              <span>{data.color}</span>
-            </div>
-            <div className="flex justify-between mb-1">
-              <span>{t("xa.xaxa3")}</span>
-              <span>${data.price}</span>
-            </div>
-            <div className="flex justify-between mb-1">
-              <span>{t("xa.xaxa4")}</span>
-              <span>{data.hasDiscount ? "New" : "-20%"}</span>
-            </div>
-            <div className="flex justify-between mb-1">
-              <span>{t("xa.xaxa5")}</span>
-              <span>${data.discountPrice}</span>
-            </div>
-            <div className="flex justify-between mb-3">
-              <span>{t("xa.xaxa6")}</span>
-              <span className="font-normal">{data.description}</span>
-            </div>
-
-            <button className="w-full mt-2 py-2 bg-yellow-400 hover:bg-yellow-500 text-black rounded-lg flex items-center justify-center gap-2 font-semibold">
-              <ShoppingCart size={18} />
-              {t("main.lol6")}
-            </button>
-          </div>
+          <button
+            onClick={() => {
+              if (localStorage.getItem("token")) {
+                addToCart(data.id);
+                notification.success({
+                  message: t("set.ttt"),
+                  placement: "bottomRight",
+                  duration: 2,
+                });
+              } else {
+                setOpenDialog(true);
+              }
+            }}
+            className="w-full py-4 mt-4 rounded-2xl bg-amber-300 text-black font-semibold text-lg flex items-center justify-center gap-2 transition-all duration-300 hover:scale-[1.02] active:scale-[0.97]"
+          >
+            <ShoppingCart size={20} /> {t("main.lol6")}
+          </button>
         </div>
       </div>
     </>

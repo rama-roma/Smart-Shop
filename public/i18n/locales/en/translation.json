@@ -1,35 +1,37 @@
 {
   "navbar": {
     "title": "Catalog",
-    "title1": "Search Products",
+    "title1": "Search products",
     "title2": "Cart",
     "title3": "Favorites",
     "title4": "Profile",
-    "title5": "Alif Shop News",
-    "title6": "For Customers",
-    "title7": "Support Chat",
-    "title8": "Buyer Agreement",
-    "title9": "Site Usage Rules",
-    "title10": "For Partners",
-    "title11": "Sell on Alif Shop",
-    "title12": "Seller Dashboard",
-    "title13": "Seller Agreement",
-    "title14": "Scan QR and Download Alif Mobi App",
-    "title15": "© 2025 LLC 'Alif Savdo'. Dushanbe, Sadriaddin Ayni, 34",
+    "title5": "Bee Shop News",
+    "title6": "For buyers",
+    "title7": "Support chat",
+    "title8": "Buyer offer",
+    "title9": "Website terms of use",
+    "title10": "For partners",
+    "title11": "Sell on Bee Shop",
+    "title12": "Seller dashboard",
+    "title13": "Seller offer",
+    "title14": "Scan the camera and download the Bee Mobi app",
     "title16": "Login"
   },
   "main": {
-    "lol": "Internet Year with Discount and 0% Installment",
+    "lol": "One year of internet with discounts and 0% installment",
     "lol1": "All",
     "lol2": "Heaters",
-    "lol3": "Main Star of the Season",
-    "lol4": "No Favorite Products Yet",
+    "lol3": "Season's main star",
+    "lol4": "You haven't added any products to favorites yet",
     "lol5": "Favorites",
-    "lol6": "Add to Cart",
+    "lol6": "Add to cart",
     "lol7": "Catalog",
-    "lol8": "Color:",
+    "lol8": "In shade:",
     "lol9": "Rating",
-    "lol10": "Reviews"
+    "lol10": "Reviews",
+    "lol20": "Remove all",
+    "lol21": "Add products to favorites by clicking",
+    "noProducts": "No such product"
   },
   "xa": {
     "xaxa": "SKU",
@@ -37,36 +39,36 @@
     "xaxa2": "Shade",
     "xaxa3": "Price",
     "xaxa4": "Status",
-    "xaxa5": "Old Price",
+    "xaxa5": "Old price",
     "xaxa6": "Category",
     "xaxa7": "Back"
   },
   "login": {
-    "log": "Username",
+    "log": "Nickname",
     "log1": "Password",
     "log2": "Login",
-    "log3": "Forgot Password?",
-    "log4": "No Account?"
+    "log3": "Forgot password?",
+    "log4": "No account?"
   },
   "register": {
     "reg": "Register",
-    "reg1": "Create Account",
-    "reg2": "Username",
-    "reg3": "Phone Number",
+    "reg1": "Create account",
+    "reg2": "Nickname",
+    "reg3": "Phone number",
     "reg4": "Email",
     "reg5": "Password",
-    "reg6": "Confirm Password",
-    "reg7": "Already Have an Account?"
+    "reg6": "Confirm password",
+    "reg7": "Already have an account?"
   },
   "profile": {
-    "pro": "My Profile",
+    "pro": "My profile",
     "pro1": "Logout",
-    "pro2": "My Cart",
+    "pro2": "My cart",
     "pro3": "Reviews",
     "pro4": "Favorites",
     "pro5": "User:",
-    "pro6": "Contact Info",
-    "pro7": "Username",
+    "pro6": "Contact information",
+    "pro7": "Nickname",
     "pro8": "Email",
     "pro9": "Password"
   },
@@ -74,42 +76,50 @@
     "prod": "Catalog"
   },
   "catalogPage": {
-    "cat": "Product Catalog"
+    "cat": "Product catalog"
   },
   "amin": {
     "maga": "Prices",
-    "maga1": "From 9 TJS",
-    "maga2": "Up to 28,000 TJS",
+    "maga1": "From 9 s.",
+    "maga2": "Up to 28,000 s.",
     "maga3": "Brands",
     "maga4": "Colors",
     "maga5": "Categories",
-    "reset": "Reset Filters"
+    "reset": "Reset filters"
   },
   "cart": {
-    "ca": "My Cart",
-    "ca1": "Delete All",
+    "ca": "My cart",
+    "ca1": "Remove all",
     "ca2": "Product",
     "ca3": "Color",
     "ca4": "Price",
     "ca5": "Favorites",
-    "ca6": "Total Amount",
+    "ca6": "Total amount",
     "ca7": "Action",
-    "ca8": "Summary",
+    "ca8": "Total",
     "ca9": "View",
-    "ca10": "No Products",
-    "ca11": "Order Summary",
+    "ca10": "Cart is empty",
+    "ca11": "Order summary",
     "ca12": "Discount",
-    "ca13": "Delivery Fee",
+    "ca13": "Delivery cost",
     "ca14": "Overpayment",
-    "ca16": "Checkout"
+    "ca16": "Checkout",
+    "ca17": "Add products to place an order"
   },
   "set": {
     "t": "Dear customer!",
-    "tt": "You need to register or log in to make a purchase",
-    "ttt": "Product added successfully",
+    "tt": "To make a purchase, please register or log in",
+    "ttt": "Product successfully added",
     "t1": "Product added to favorites",
     "t2": "Product removed from favorites",
-    "t3": "Return to home page",
-    "t4": "Page not found"
+    "t3": "Back to home",
+    "t4": "Page not found",
+    "t5": "Home",
+    "t6": "Continue",
+    "t7": "Do you want to make a purchase?"
+  },
+  "pol": {
+    "po": "Home",
+    "po1": "Product information"
   }
 }

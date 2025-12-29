@@ -1,11 +1,8 @@
 import {
-  Facebook,
   Heart,
   Home,
-  Instagram,
   LogIn,
   Search,
-  Send,
   ShoppingBasket,
   User,
   WalletCards,
@@ -39,6 +36,7 @@ const Layout = () => {
 
   const handleGoToCatalog = () => {
     setOpenCatalog(false);
+    setOpenCatalogMobile(false);
     setActiveCategoryId(null);
     navigate("/catalogPage");
   };
@@ -64,7 +62,7 @@ const Layout = () => {
       (sum: number, item: any) => sum + item.quantity,
       0
     ) ?? 0;
-  if(!localStorage.getItem("token")) cartCount = 0
+  if (!localStorage.getItem("token")) cartCount = 0;
   return (
     <>
       <div className="hidden md:block">
@@ -345,72 +343,72 @@ const Layout = () => {
             </section>
           </div>
 
-          <div className="flex justify-center text-center items-center p-10">
-            <h1 className="text-[white] text-[12px]">{t("navbar.title15")}</h1>
-          </div>
         </footer>
 
         <Modal
           title={t("main.lol7")}
-          open={openCatalog}
+          open={openCatalogMobile}
           footer={null}
-          width={1200}
+          width="100%"
           onCancel={() => {
-            setOpenCatalog(false);
+            setOpenCatalogMobile(false);
             setActiveCategoryId(null);
           }}
         >
-          <button
-            className="text-[blue] cursor-alias"
-            onClick={handleGoToCatalog}
-          >
+          <button className="text-blue-500 mb-3" onClick={handleGoToCatalog}>
             {t("catalogPage.cat")}
           </button>
-          <section className="max-h-[500px] flex justify-between">
-            <div className="overflow-auto w-1/2">
-              {data?.map((category) => (
-                <div
-                  key={category.id}
-                  onClick={() => setActiveCategoryId(category.id)}
-                  className={`p-2 border-b border-gray-300 cursor-pointer
-                  ${
-                    activeCategoryId === category.id
-                      ? "bg-gray-200 font-semibold"
-                      : "hover:bg-gray-100"
-                  }`}
-                >
-                  <div className="flex  items-center justify-between">
-                    <h2>{category.categoryName}</h2>
+
+          <section className="max-h-[70vh] overflow-auto">
+            {!activeCategoryId && (
+              <div className="flex flex-col gap-2">
+                {data?.map((category) => (
+                  <div
+                    key={category.id}
+                    onClick={() => setActiveCategoryId(category.id)}
+                    className="p-3 border rounded-lg flex items-center justify-between active:bg-gray-100"
+                  >
+                    <h2 className="text-sm font-medium">
+                      {category.categoryName}
+                    </h2>
                     <img
-                      className="w-20 h-10 rounded-2xl"
+                      className="w-16 h-8 rounded-lg object-cover"
                       src={`https://store-api.softclub.tj/images/${category.categoryImage}`}
                       alt=""
                     />
                   </div>
-                </div>
-              ))}
-            </div>
-            <div className="overflow-auto w-1/2">
-              {!activeCategory ? (
-                <p className="p-4 text-gray-400">Выберите категорию</p>
-              ) : activeCategory.subCategories.length === 0 ? (
-                <p className="p-4 text-gray-400">Нет подкатегорий</p>
-              ) : (
-                activeCategory.subCategories.map((sub) => (
-                  <div
-                    key={sub.id}
-                    onClick={() => {
-                      navigate(`/catalogById/${activeCategory.id}`);
-                      setOpenCatalog(false);
-                      setActiveCategoryId(null);
-                    }}
-                    className="p-2 border-b border-gray-300"
-                  >
-                    <h2>{sub.subCategoryName}</h2>
-                  </div>
-                ))
-              )}
-            </div>
+                ))}
+              </div>
+            )}
+
+            {activeCategory && (
+              <div className="flex flex-col gap-2">
+                <button
+                  className="text-sm text-gray-500 mb-2"
+                  onClick={() => setActiveCategoryId(null)}
+                >
+                  ← Назад
+                </button>
+
+                {activeCategory.subCategories.length === 0 ? (
+                  <p className="text-gray-400">Нет подкатегорий</p>
+                ) : (
+                  activeCategory.subCategories.map((sub) => (
+                    <div
+                      key={sub.id}
+                      onClick={() => {
+                        navigate(`/catalogById/${activeCategory.id}`);
+                        setOpenCatalogMobile(false);
+                        setActiveCategoryId(null);
+                      }}
+                      className="p-3 border rounded-lg active:bg-gray-100"
+                    >
+                      {sub.subCategoryName}
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
           </section>
         </Modal>
       </div>
