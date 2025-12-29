@@ -197,7 +197,7 @@ const WishlistPage = () => {
               },
             }}
             styles={{
-              content: {
+              body: {
                 borderRadius: "20px",
                 background: "linear-gradient(180deg, #FFF6D6, #FFE9A3)",
                 boxShadow: "0 20px 40px rgba(0,0,0,0.2)",

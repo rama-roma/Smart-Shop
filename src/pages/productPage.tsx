@@ -347,10 +347,12 @@ const ProductPage = () => {
             },
           }}
           styles={{
-            content: {
-              borderRadius: "20px",
-              background: "linear-gradient(180deg, #FFF6D6, #FFE9A3)",
+            root: {
+              borderRadius: "20px", 
               boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+            },
+            body: {
+              background: "linear-gradient(180deg, #FFF6D6, #FFE9A3)",
               padding: "30px",
             },
             header: {
@@ -392,7 +394,6 @@ const ProductPage = () => {
           placeholder={t("navbar.title1")}
           onChange={(e) => setSearch(e.target.value)}
         />
-
 
         <div className="flex flex-col gap-3 mb-4">
           <details className="border rounded-lg p-2">
@@ -470,7 +471,6 @@ const ProductPage = () => {
           </button>
         </div>
 
-
         <section className="flex flex-col gap-4">
           {isLoading ? (
             <LoadingFunc />
@@ -488,7 +488,6 @@ const ProductPage = () => {
                   key={product.id}
                   className="relative flex flex-col gap-2 border rounded-xl p-3 shadow hover:shadow-lg transition"
                 >
-
                   <span
                     className={`absolute top-2 left-2 text-xs font-bold px-2 py-1 rounded-md ${
                       product.hasDiscount ? "bg-green-500" : "bg-red-500"
@@ -496,7 +495,6 @@ const ProductPage = () => {
                   >
                     {product.hasDiscount ? "New" : "-20%"}
                   </span>
-
 
                   <div className="absolute top-2 right-2 flex gap-2">
                     <button onClick={() => handleAddToFavorites(product)}>
@@ -511,7 +509,6 @@ const ProductPage = () => {
                       <Eye size={22} />
                     </Link>
                   </div>
-
 
                   <div className="w-full h-40 flex items-center justify-center">
                     <img
@@ -536,7 +533,6 @@ const ProductPage = () => {
                     <span className="font-bold">${product.price}</span>
                   )}
 
-    
                   <button
                     onClick={() => {
                       const isLoggedIn = !!localStorage.getItem("token");
@@ -569,7 +565,6 @@ const ProductPage = () => {
             })
           )}
         </section>
-
 
         <Modal
           open={openDialog}

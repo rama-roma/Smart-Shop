@@ -415,7 +415,7 @@ Total: ${order.total}
             },
           }}
           styles={{
-            content: {
+            body: {
               borderRadius: "20px",
               background: "linear-gradient(180deg, #FFF6D6, #FFE9A3)",
               boxShadow: "0 20px 40px rgba(0,0,0,0.18)",
@@ -455,7 +455,6 @@ Total: ${order.total}
               }
             `}
                 >
-
                   <div className="flex gap-4">
                     <img
                       src={`https://store-api.softclub.tj/images/${e.product.image}`}

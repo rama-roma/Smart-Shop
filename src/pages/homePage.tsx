@@ -497,7 +497,7 @@ const HomePage = () => {
             },
           }}
           styles={{
-            content: {
+            body: {
               borderRadius: "20px",
               background: "linear-gradient(180deg, #FFF6D6, #FFE9A3)",
               boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
@@ -534,7 +534,7 @@ const HomePage = () => {
 
       <div className="block md:hidden px-4 py-6">
         <main className="flex flex-col gap-8">
-          <Swipper  img={img1} />
+          <Swipper img={img1} />
 
           <section className="flex flex-col gap-4">
             {isLoading && (
@@ -943,7 +943,7 @@ const HomePage = () => {
             },
           }}
           styles={{
-            content: {
+            body: {
               borderRadius: "20px",
               background: "linear-gradient(180deg, #FFF6D6, #FFE9A3)",
               boxShadow: "0 20px 40px rgba(0,0,0,0.2)",

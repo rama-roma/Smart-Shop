@@ -42,7 +42,7 @@ const InfoPage = () => {
       ? "bg-[#1b1b1b] border-white/10"
       : "bg-white border-black/10";
 
-  const Row = ({ label, value }: { label: string; value: string }) => (
+  const Row = ({ label, value }: { label: string; value: string | number }) => (
     <div className="flex justify-between items-center">
       <span className="text-gray-500">{label}</span>
       <span className="font-medium">{value}</span>
@@ -177,7 +177,7 @@ const InfoPage = () => {
             },
           }}
           styles={{
-            content: {
+            body: {
               borderRadius: "20px",
               background: "linear-gradient(180deg, #FFF6D6, #FFE9A3)",
               boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
